@@ -58,9 +58,27 @@ void GestorVentas::listarConciertos()
 
 void GestorVentas::guardarConciertosCSV()
 {
+	ofstream archivo;
+	archivo.open("Conciertos.csv", ios::out);
+	if (archivo.fail())
+	{
+		cout << "No se pudo abrir el archivo" << endl;
+		exit(1);
+	}
+	for (int i = 0; i < this->conciertosDisponibles.size(); i++)
+	{
+		archivo << this->conciertosDisponibles[i]->getNombreBanda() << "," <<
+			this->conciertosDisponibles[i]->getPrecioEntrada() << "," <<
+			this->conciertosDisponibles[i]->getFechaConcierto() << "," <<
+			this->conciertosDisponibles[i]->getCodigo() << "," <<
+			this->conciertosDisponibles[i]->getTotalRecaudado() << "," <<
+			this->conciertosDisponibles[i]->getEntradasVendidas() << endl;
+	}
+	archivo.close();
 }
 
 void GestorVentas::cargarConciertosCSV()
 {
+	
 }
 

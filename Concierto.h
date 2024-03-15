@@ -9,11 +9,11 @@ private:
 	double precioEntrada;
 	string fechaConcierto; //formato dia,mes,año
 	int codigo; // entre 1000 y 9999 y debe ser unico
-	double totalRecaudado;
-	int entradasVendidas;
+	double totalRecaudado = 0;
+	int entradasVendidas = 0;
 public:
 	Concierto();
-	Concierto(string nombreBanda, double precioEntrada, string fechaConcierto, int codigo, double totalRecaudado = 0, int entradasVendidas);
+	Concierto(string nombreBanda, double precioEntrada, string fechaConcierto, int codigo);
 	~Concierto();
 	string getNombreBanda();
 	void setNombreBanda(string nombreBanda);

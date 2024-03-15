@@ -4,14 +4,13 @@ Concierto::Concierto()
 {
 }
 
-Concierto::Concierto(string nombreBanda, double precioEntrada, string fechaConcierto, int codigo, double totalRecaudado = 0, int entradasVendidas)
+Concierto::Concierto(string nombreBanda, double precioEntrada, string fechaConcierto, int codigo)
 {
 	this->nombreBanda = nombreBanda;
 	this->precioEntrada = precioEntrada;
 	this->fechaConcierto = fechaConcierto;
 	this->codigo = codigo;
-	this->totalRecaudado = totalRecaudado;
-	this->entradasVendidas = entradasVendidas;
+	 
 }
 
 Concierto::~Concierto()
