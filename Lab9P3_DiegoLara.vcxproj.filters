@@ -18,5 +18,19 @@
     <ClCompile Include="Lab9P3_DiegoLara.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Concierto.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GestorVentas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Concierto.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GestorVentas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
