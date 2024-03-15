@@ -1,5 +1,4 @@
 #include "GestorVentas.h"
-
 GestorVentas::GestorVentas()
 {
 }
@@ -43,16 +42,10 @@ void GestorVentas::venderEntrada(int indiceConcierto, int cantidad)
 
 void GestorVentas::listarConciertos()
 {
-	if (this->conciertosDisponibles.empty())// validacion
-	{
-		cout << "No hay ningun concierto disponible, cargue los conciertos guardados o agregue un concierto" << endl;
-	}
-	else {
-		for (int i = 0; i < this->conciertosDisponibles.size(); i++) {
-			cout << "Cuenta: " << (i + 1) << endl;
-			this->conciertosDisponibles[i]->toString(); // mostrar los conciertos disponibles
-			cout << endl;
-		}
+	for (int i = 0; i < this->conciertosDisponibles.size(); i++) {
+		cout << "Cuenta: " << (i + 1) << endl;
+		this->conciertosDisponibles[i]->toString(); // mostrar los conciertos disponibles
+		cout << endl;
 	}
 }
 
@@ -79,6 +72,45 @@ void GestorVentas::guardarConciertosCSV()
 
 void GestorVentas::cargarConciertosCSV()
 {
-	
+	ifstream archivo;
+	archivo.open("Conciertos.csv", ios::app);
+	if (archivo.fail())
+	{
+		cout << "No se pudo abrir el archivo" << endl;
+		exit(1);
+	}
+	string temp = "";
+	char* archivoDelimitado = nullptr;
+	getline(archivo, temp);
+	char* temporal = new char [temp.length()+1];
+	strcpy_s(temporal, temp.length() + 1, temp.c_str());
+	archivoDelimitado = strtok(temporal, ",");
+	Concierto* conciertoTemp = nullptr;
+	string nombreTemp = "";
+	double precioTemp = 0.0;
+	string fechaTemp = "";
+	int codigoTemp = 0;
+	double recaudadoTemp = 0.0;
+	int entradasTemp = 0;
+	int contador = 0;
+	while (archivoDelimitado != NULL) {
+		nombreTemp = to_string(archivoDelimitado[contador]);
+		contador++;
+		precioTemp = (double)(archivoDelimitado[contador]);
+		contador++;
+		fechaTemp = to_string(archivoDelimitado[contador]);
+		contador++;
+		codigoTemp = (int)(archivoDelimitado[contador]);
+		contador++;
+		recaudadoTemp = (double)(archivoDelimitado[contador]);
+		contador++;
+		entradasTemp = (int)(archivoDelimitado[contador]);
+		contador++;
+		Concierto* conciertoTemp = new Concierto(nombreTemp, precioTemp, fechaTemp, codigoTemp);
+		conciertoTemp->setTotalRecaudado(recaudadoTemp);
+		conciertoTemp->setEntradasVendidas(entradasTemp);
+		conciertosDisponibles.push_back(conciertoTemp);
+	}
+	archivo.close();
 }
 
