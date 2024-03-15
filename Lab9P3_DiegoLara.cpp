@@ -18,7 +18,7 @@ void ejercicio_1() {
 		cout << "2. Eliminar Concierto" << endl;
 		cout << "3. Vender Entrada" << endl;
 		cout << "4. Listar Conciertos" << endl;
-		cout << "5. Carcar Conciertos desde CSV" << endl;
+		cout << "5. Cargar Conciertos desde CSV" << endl;
 		cout << "6. Guardar Conciertos en CSV" << endl;
 		cout << "7. Salir" << endl;
 		cout << "Seleccione una opcion: " << endl;

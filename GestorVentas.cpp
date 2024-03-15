@@ -79,26 +79,28 @@ void GestorVentas::cargarConciertosCSV()
 		cout << "No se pudo abrir el archivo" << endl;
 		exit(1);
 	}
+
 	string temp = "";
 	char* archivoDelimitado = nullptr;
 	getline(archivo, temp);
-	char* temporal = new char [temp.length()+1];
+	char* token;
+	char* temporal = new char[temp.length() + 1];
 	strcpy_s(temporal, temp.length() + 1, temp.c_str());
-	archivoDelimitado = strtok(temporal, ",");
-	Concierto* conciertoTemp = nullptr;
-	string nombreTemp = "";
-	double precioTemp = 0.0;
-	string fechaTemp = "";
-	int codigoTemp = 0;
-	double recaudadoTemp = 0.0;
-	int entradasTemp = 0;
-	int contador = 0;
+	archivoDelimitado = strtok_s(temporal, ",", &token);
 	while (archivoDelimitado != NULL) {
-		nombreTemp = to_string(archivoDelimitado[contador]);
+		string nombreTemp = "";
+		double precioTemp = 0.0;
+		string fechaTemp = "";
+		int codigoTemp = 0;
+		double recaudadoTemp = 0.0;
+		int entradasTemp = 0;
+		int contador = 0;
+		nombreTemp = archivoDelimitado;
 		contador++;
+		archivoDelimitado = strtok_s(temporal, ",", &token);
 		precioTemp = (double)(archivoDelimitado[contador]);
 		contador++;
-		fechaTemp = to_string(archivoDelimitado[contador]);
+		fechaTemp = archivoDelimitado[contador];
 		contador++;
 		codigoTemp = (int)(archivoDelimitado[contador]);
 		contador++;
@@ -110,6 +112,7 @@ void GestorVentas::cargarConciertosCSV()
 		conciertoTemp->setTotalRecaudado(recaudadoTemp);
 		conciertoTemp->setEntradasVendidas(entradasTemp);
 		conciertosDisponibles.push_back(conciertoTemp);
+		getline(archivo, temp);
 	}
 	archivo.close();
 }
