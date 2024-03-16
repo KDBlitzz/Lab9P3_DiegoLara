@@ -8,8 +8,13 @@ GestorVentas::GestorVentas(vector<Concierto*> conciertosDisponibles)
 	this->conciertosDisponibles = conciertosDisponibles;
 }
 
-GestorVentas::~GestorVentas()
+GestorVentas::~GestorVentas() 
 {
+	for (int i = 0; i < this->conciertosDisponibles.size(); i++) // borrar memoria
+	{
+		delete this->conciertosDisponibles[i];
+	}
+	this->conciertosDisponibles.clear();
 }
 
 vector<Concierto*> GestorVentas::getConciertosDisponibles()
@@ -29,10 +34,10 @@ void GestorVentas::agregarConcierto(Concierto* nuevoConcierto)
 
 void GestorVentas::eliminarConcierto(int indiceConcierto)
 {
-	this->conciertosDisponibles.erase(this->conciertosDisponibles.begin() + indiceConcierto); // eliminar la cuenta
+	this->conciertosDisponibles.erase(this->conciertosDisponibles.begin() + indiceConcierto); // eliminar el concierto
 }
 
-void GestorVentas::venderEntrada(int indiceConcierto, int cantidad)
+void GestorVentas::venderEntrada(int indiceConcierto, int cantidad) // Calcular el total de las entradas vendidas dependiendo de la cantidad
 {
 	double totalTemp = 0;
 	totalTemp = this->conciertosDisponibles[indiceConcierto]->getPrecioEntrada() * cantidad;
@@ -49,7 +54,7 @@ void GestorVentas::listarConciertos()
 	}
 }
 
-void GestorVentas::guardarConciertosCSV()
+void GestorVentas::guardarConciertosCSV() // guardar los conciertos disponibles adentro del archivo
 {
 	ofstream archivo;
 	archivo.open("Conciertos.csv", ios::out);
@@ -70,7 +75,7 @@ void GestorVentas::guardarConciertosCSV()
 	archivo.close();
 }
 
-void GestorVentas::cargarConciertosCSV()
+void GestorVentas::cargarConciertosCSV() // cargar los conciertos del archivo al vector de la clase
 {
 	ifstream archivo;
 	archivo.open("Conciertos.csv", ios::app);
@@ -79,7 +84,7 @@ void GestorVentas::cargarConciertosCSV()
 		cout << "No se pudo abrir el archivo" << endl;
 		exit(1);
 	}
-
+	int terminar = 0;
 	string temp = "";
 	char* archivoDelimitado = nullptr;
 	getline(archivo, temp);
@@ -87,32 +92,35 @@ void GestorVentas::cargarConciertosCSV()
 	char* temporal = new char[temp.length() + 1];
 	strcpy_s(temporal, temp.length() + 1, temp.c_str());
 	archivoDelimitado = strtok_s(temporal, ",", &token);
-	while (archivoDelimitado != NULL) {
+	while (terminar != 2) {
 		string nombreTemp = "";
 		double precioTemp = 0.0;
 		string fechaTemp = "";
 		int codigoTemp = 0;
 		double recaudadoTemp = 0.0;
 		int entradasTemp = 0;
-		int contador = 0;
+		string doubleToString = "";
 		nombreTemp = archivoDelimitado;
-		contador++;
-		archivoDelimitado = strtok_s(temporal, ",", &token);
-		precioTemp = (double)(archivoDelimitado[contador]);
-		contador++;
-		fechaTemp = archivoDelimitado[contador];
-		contador++;
-		codigoTemp = (int)(archivoDelimitado[contador]);
-		contador++;
-		recaudadoTemp = (double)(archivoDelimitado[contador]);
-		contador++;
-		entradasTemp = (int)(archivoDelimitado[contador]);
-		contador++;
+		archivoDelimitado = strtok_s(NULL, ",", &token);
+		doubleToString = archivoDelimitado;
+		precioTemp = stod(doubleToString);
+		archivoDelimitado = strtok_s(NULL, ",", &token);
+		fechaTemp = archivoDelimitado;
+		archivoDelimitado = strtok_s(NULL, ",", &token);
+		codigoTemp = atoi(archivoDelimitado);
 		Concierto* conciertoTemp = new Concierto(nombreTemp, precioTemp, fechaTemp, codigoTemp);
-		conciertoTemp->setTotalRecaudado(recaudadoTemp);
-		conciertoTemp->setEntradasVendidas(entradasTemp);
 		conciertosDisponibles.push_back(conciertoTemp);
 		getline(archivo, temp);
+		strcpy_s(temporal, temp.length() + 1, temp.c_str());
+		archivoDelimitado = strtok_s(temporal, ",", &token);
+		if (archivo.eof())
+		{
+			terminar++;
+		}
+		if (archivoDelimitado == NULL)
+		{
+			break;
+		}
 	}
 	archivo.close();
 }

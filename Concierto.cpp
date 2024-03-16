@@ -13,8 +13,12 @@ Concierto::Concierto(string nombreBanda, double precioEntrada, string fechaConci
 	 
 }
 
-Concierto::~Concierto()
+Concierto::~Concierto() 
 {
+	/*this->nombreBanda = "";
+	this->precioEntrada = 0.0;
+	this->fechaConcierto = "";
+	this->codigo = 0;*/
 }
 
 string Concierto::getNombreBanda()
@@ -77,7 +81,7 @@ void Concierto::setEntradasVendidas(int entradasVendidas)
 	this->entradasVendidas = entradasVendidas;
 }
 
-void Concierto::toString()
+void Concierto::toString() // To string de la clase
 {
 	cout << "Nombre de la Banda: " << this->nombreBanda << endl;
 	cout << "Precio de la entrada: " << this->precioEntrada << endl;
